@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>scrolltop</title>
+	<style>
+		*{margin: 0;
+		padding: 0;box-sizing:border-box;}
+		.nav{width:1200px;height:60px;margin:0 auto;background-color: #ccc;position: fixed;top:0;left:50%;transform:translate(-50%,0);}
+		.nav ul{list-style: none;}
+		.nav li{width:150px;height:60px;text-align: center;line-height: 60px;float:left;}
+		.elevator{position:fixed;top:100px; left:200px;display:none}
+		.elevator>ul>li{width:30px;height:30px;list-style: none;line-height: 30px;text-align: center;
+			background-color: #bbb;margin-top: 2px}
+	</style>
+	<script src="js/jquery-3.1.0.min.js"></script>
+	<script>
+	$(function(){
+		var h=$(window).height()-60//窗口高度减去nav的高度设置为.scroll的高度
+		$('.scroll').css('height',h)
+		$('.scroll:even').css("background","#666")
+		
+		$('.nav li').click(function(){
+			var i=$(this).index();
+			$(this).siblings().css('background','#999')
+			$(this).css('background','orange')
+			$("body").animate({"scrollTop":i*h},1000);
+		})
+		$('.elevator li').click(function(){
+			var i=$(this).index();
+			$(this).siblings().css('background','#bbb')
+			$(this).css('background','orange')
+			$("body").animate({"scrollTop":i*h},1000);
+		})
+		$(window).scroll(function(){
+			var bH=$('body').scrollTop();
+			var n=Math.floor(bH/h);
+			$('.nav li').eq(n).siblings().css('background','#999')
+			$('.nav li').eq(n).css('background','orange');
+			$('.elevator li').eq(n).siblings().css('background','#bbb')
+			$('.elevator li').eq(n).css('background','orange');
+			if($('body').scrollTop()>$(window).height()-60){
+				$('.elevator').slideDown(200)
+			}else{
+				$('.elevator').slideUp(200)
+			}
+		})
+	})
+	</script>
+</head>
+<body>
+	<div class="nav">
+		<ul>
+			<li>nav1</li>
+			<li>nav2</li>
+			<li>nav3</li>
+			<li>nav4</li>
+			<li>nav5</li>
+			<li>nav6</li>
+			<li>nav7</li>
+			<li>nav8</li>
+		</ul>
+	</div>
+	<div class="elevator">
+		<ul>
+			<li>F1</li>
+			<li>F2</li>
+			<li>F3</li>
+			<li>F4</li>
+			<li>F5</li>
+			<li>F6</li>
+			<li>F7</li>
+			<li>F8</li>
+		</ul>
+	</div>
+	<div class="scroll" style="margin-top:60px"></div>
+	<div class="scroll"></div>
+	<div class="scroll"></div>
+	<div class="scroll"></div>
+	<div class="scroll"></div>
+	<div class="scroll"></div>
+	<div class="scroll"></div>
+	<div class="scroll"></div>
+</body>
+</html>
